@@ -6,11 +6,13 @@ library(ggthemes)
 library(gtExtras)
 library(nflreadr)
 library(dplyr)
-reg_szn <- load_pbp(seasons=1999:2023)|>
+library(ggrepel)
+reg_szn <- load_pbp(seasons=1999:2024)|>
   filter(pass==1,season_type=="REG",!is.na(epa))|>
+  filter(season!=2015)|>
   group_by(passer_player_id)|>
   summarize(name=first(name),team=first(posteam),epa_pass_reg=mean(epa))
-playoffs <- load_pbp(seasons=1999:2023)|>
+playoffs <- load_pbp(seasons=1999:2024)|>
   filter(pass==1,season_type=="POST",!is.na(epa))|>
   group_by(passer_player_id)|>
   summarize(epa_pass_post=mean(epa),playoff_passes=n())|>
